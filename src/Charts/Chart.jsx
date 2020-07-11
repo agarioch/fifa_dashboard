@@ -12,7 +12,7 @@ const Chart = ({dimensions, children}) => (
       className="Chart"
       width={dimensions.width}
       height={dimensions.height}>
-      <g transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop}`}>
+      <g className="Plot" transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}>
         {children}
       </g>
     </svg>

@@ -1,9 +1,18 @@
 .Chart {
     overflow: visible;
+    display: flex;
 }
 
 .Chart text {
     fill: #95a5a6;
+}
+
+.ChartTitle {
+    margin: 0;
+}
+
+.Plot {
+    width: 100%;
 }
 
 .Line {
@@ -12,7 +21,7 @@
 
 .Line--type-line {
     fill: none;
-    stroke: #9980FA;
+    stroke: #27AB83;
     stroke-width: 3px;
     stroke-linecap: round;
 }
@@ -47,11 +56,11 @@
 }
 
 .Circles__circle {
-    fill: #9980FA;
+    fill: #27AB83;
     transition: all 0.3s ease-out;
 }
 
 .Bars__rect {
-    fill: #9980FA;
+    fill: #27AB83;
     transition: all 0.3s ease-out;
 }

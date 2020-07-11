@@ -2,16 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as d3 from 'd3'
 
-import Chart from "./Charts/Chart"
-import Bars from "./Charts/Bars"
-import Axis from "./Charts/Axis"
-import Gradient from "./Charts/Gradient"
-import {accessorPropsType, useChartDimensions, useUniqueId} from './Charts/utils';
+import Chart from "../Charts/Chart"
+import Bars from "../Charts/Bars"
+import Axis from "../Charts/Axis"
+import Gradient from "../Charts/Gradient"
+import {accessorPropsType, useChartDimensions, useUniqueId} from '../Charts/utils';
 
 const gradientColors = ["#9980FA", "rgb(226, 222, 243)"]
-const Histogram = ({data, xAccessor, label}) => {
+const Histogram = ({data, xAccessor, label, isLoading}) => {
   const gradientId = useUniqueId("Histogram-gradient")
-  const [ref, dimensions] = useChartDimensions({marginLeft: 100, marginBottom: 20})
+  const [ref, dimensions] = useChartDimensions({marginTop: 15, marginLeft: 60, marginBottom: 100})
 
   const numberOfThresholds = 9
 
@@ -43,6 +43,7 @@ const Histogram = ({data, xAccessor, label}) => {
 
   return (
     <div className="Histogram" ref={ref}>
+      <h3 className="ChartTitle">Players By {label}</h3>
       <Chart dimensions={dimensions}>
         <defs>
           <Gradient
@@ -61,7 +62,8 @@ const Histogram = ({data, xAccessor, label}) => {
           dimension="y"
           scale={yScale}
           label="Count"/>
-        <Bars
+         {!isLoading &&
+          <Bars
           data={bins}
           keyAccessor={keyAccessor}
           xAccessor={xAccessorScaled}
@@ -70,6 +72,8 @@ const Histogram = ({data, xAccessor, label}) => {
           heightAccessor={heightAccessorScaled}
           style={{fill: `url(#${{gradientId}}`}}
         />
+      }
+
       </Chart>
     </div>
   )
