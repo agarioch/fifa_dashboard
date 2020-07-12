@@ -64,3 +64,23 @@
     fill: #27AB83;
     transition: all 0.3s ease-out;
 }
+
+.Bars__rect:hover {
+    fill: #65D6AD;
+}
+
+.Tooltip {
+    fill: #bdc3c7;
+}
+.Tooltip__label {
+    text-anchor: middle;
+    transition: all 0.3s ease-out;
+}
+
+.Tooltip__arrow {
+    top: 0;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 0 5px 5px;
+    border-bottom-color: #27AB83;
+}

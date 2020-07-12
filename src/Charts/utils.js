@@ -43,7 +43,6 @@ export const combineChartDimensions = dimensions => {
 export const useChartDimensions = passedSettings => {
   const ref = useRef()
   const dimensions = combineChartDimensions(passedSettings)
-  console.log(dimensions.marginLeft)
 
   const [width, changeWidth] = useState(0)
   const [height, changeHeight] = useState(0)

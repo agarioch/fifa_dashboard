@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import * as d3 from 'd3'
 
@@ -7,10 +7,14 @@ import Bars from "../Charts/Bars"
 import Axis from "../Charts/Axis"
 import Gradient from "../Charts/Gradient"
 import {accessorPropsType, useChartDimensions, useUniqueId} from '../Charts/utils';
+import Tooltip from "../Charts/Tooltip";
 
 const gradientColors = ["#9980FA", "rgb(226, 222, 243)"]
 const Histogram = ({data, xAccessor, label, isLoading}) => {
   const gradientId = useUniqueId("Histogram-gradient")
+  const [hoverPosition, setHoverPosition] = useState({x:0, y:0})
+  const [hoverValue, setHoverValue] = useState()
+  const [tooltipActive, setTooltipActive] = useState(false)
   const [ref, dimensions] = useChartDimensions({marginTop: 15, marginLeft: 60, marginBottom: 100})
 
   const numberOfThresholds = 9
@@ -41,6 +45,21 @@ const Histogram = ({data, xAccessor, label, isLoading}) => {
   const heightAccessorScaled = d => dimensions.plotHeight - yScale(yAccessor(d))
   const keyAccessor = (d, i) => i
 
+  // Tooltip
+
+  function onMouseOver(evt, data) {
+    setTooltipActive(true)
+    setHoverPosition({
+      x: evt.target.x.baseVal.value + evt.target.width.baseVal.value / 2,
+      y: evt.target.y.baseVal.value - 10
+    });
+    setHoverValue(data)
+  }
+
+  function onMouseOut(evt) {
+    setTooltipActive(false)
+  }
+
   return (
     <div className="Histogram" ref={ref}>
       <h3 className="ChartTitle">Players By {label}</h3>
@@ -62,8 +81,8 @@ const Histogram = ({data, xAccessor, label, isLoading}) => {
           dimension="y"
           scale={yScale}
           label="Count"/>
-         {!isLoading &&
-          <Bars
+        {!isLoading &&
+        <Bars
           data={bins}
           keyAccessor={keyAccessor}
           xAccessor={xAccessorScaled}
@@ -71,9 +90,11 @@ const Histogram = ({data, xAccessor, label, isLoading}) => {
           widthAccessor={widthAccessorScaled}
           heightAccessor={heightAccessorScaled}
           style={{fill: `url(#${{gradientId}}`}}
+          onMouseOut={onMouseOut}
+          onMouseOver={onMouseOver}
         />
-      }
-
+        }
+        <Tooltip position={hoverPosition} label={hoverValue} visible={tooltipActive} />
       </Chart>
     </div>
   )
